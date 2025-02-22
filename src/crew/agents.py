@@ -1,6 +1,5 @@
 
-from langchain.llms import OpenAI
-from langchain.utilities import SQLDatabase
+from openai import OpenAI
 import ssl
 import warnings
 
@@ -11,7 +10,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module='urllib3')
 
 import os
 from dotenv import load_dotenv
-from crewai import Agent
+from crewai import Agent , LLM
 from langchain_openai import ChatOpenAI
 
 
@@ -25,8 +24,14 @@ class CustomAgents:
        
         api_key = os.getenv("OPENAI_API_KEY")
         base_url = os.getenv("OPENAI_BASE_URL")
-        self.OpenAIGPT4 = ChatOpenAI(
-            temperature=0, base_url=base_url, api_key=api_key)
+        # self.OpenAIGPT4 = ChatOpenAI(
+        #     model='deepseek-ai/DeepSeek-V2.5', temperature=0, base_url=base_url, api_key=api_key)
+        self.OpenAIGPT4 = LLM(
+            model="openai/deepseek-ai/DeepSeek-V2.5",
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=os.getenv("OPENAI_API_BASE"),
+        )
+        
     
  
  
@@ -34,7 +39,7 @@ class CustomAgents:
         return Agent(
             role="Senior Linguistics Expert",
             goal="""
-            你的目标是通过检查是否存在耸人听闻的预告片、挑衅性或充满情感的语言或夸张的声明来审查新闻声明。你的运作假设是假新闻经常使用这些策略来吸引读者的注意力。
+            你的目标是通过检查是否存在耸人听闻的预告片、挑衅性或充满情感的语言或夸张的声明。你的运作假设是假新闻经常使用这些策略来吸引读者的注意力。
             """,
             backstory="""   
             你在阅读新闻声明时非常注重细节。你能够在理解这些细节的同时挑选出小细节

@@ -92,7 +92,7 @@ class AnalysisTasks:
         return Task(
             description=(
                 """
-                结合内部知识和外部数据库检查"({url})"是否来自缺乏可信度的域.
+                结合内部知识和外部数据库检查"({url})"是否来自缺乏可信度的域.外部数据库的名称是"url",表名是"myurl",包含网页的列为myurlcol.
                 """
             ),
             expected_output="""
@@ -106,7 +106,7 @@ class AnalysisTasks:
         return Task(
             description=(
                 """
-                结合已经得到的信息,得出"({url})"是真新闻还是假新闻.
+                结合已经得到的信息,得出"({article})"是真新闻还是假新闻.
                 """
             ),
             expected_output="""
